@@ -8,13 +8,15 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>The BLIP</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link href="https://fonts.cdnfonts.com/css/avengeance-heroic-avenger" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 </head>
 <body>
   <header class="navbar-fixed">
     <nav>
-      <div class="nav-wrapper">
+      <div class="nav-wrapper red darken-3">
         <ul>
-          <li><a href="/" class="left brand-logo">&nbsp;&nbsp;The universe</a></li>
+          <li><a href="/" class="left brand-logo ">&nbsp;&nbsp;The Blip</li>
         </ul>
         <ul class="right">
           <li><a href="/about">About</a></li>
@@ -26,7 +28,7 @@
     {% block content %}
     {% endblock %}
   </main>
-  <footer class="page-footer">
+  <footer class="page-footer red darken-3">
     <div class="right">All Rights Reserved, &copy; 2023 The BLIP &nbsp;</div>
   </footer>
 </body>
