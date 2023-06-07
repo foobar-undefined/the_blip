@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+{% for char in characters %}
+  <div class="card">
+    <div class="card-content">
+      <span class="card-title">{{ char.name }} Selected character</span>
+      <img src= '{{ char.thumbnail.path}}.{{ char.thumbnail.extension}}'  width="500" height="250">
+    </div>
+    <a href="{% url 'search_characters' %}">Back to Search</a>
+  </div>
+{% empty %}
+  <p>No characters found.</p>
+{% endfor %}
+
+{% endblock %}

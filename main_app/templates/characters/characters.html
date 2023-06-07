@@ -6,16 +6,19 @@
     <input type="text" name="query" placeholder="Search character..." value="{{ query }}">
     <button type="submit">Search</button>
   </form>
-
-{% for char in characters %}
-  <div class="card">
-    <div class="card-content">
-      <span class="card-title">{{ char.name }}</span>
-      <img src= '{{ char.thumbnail.path}}.{{ char.thumbnail.extension}}'  width="250" height="250">
-    </div>
-  </div>
-{% empty %}
-  <p>No characters found.</p>
-{% endfor %}
-
+  {% if searched_characters %}
+    <div class="row">
+      {% for char in searched_characters %}
+      <div class="col s12 m6 l3">
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title">{{ char.name }} </span>
+            <img src= '{{ char.thumbnail.path}}.{{ char.thumbnail.extension}}'  width="250" height="250">
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+  {% else %}
+    <p>No characters found.</p>
+  {% endif %}
 {% endblock %}

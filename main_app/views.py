@@ -17,7 +17,7 @@ def about(request):
     return render(request, 'about.html')
 
 def display_char(request):
-    response = characters.all(name="Black Panther")
+    response = characters.all()
     marvel_characters = response['data']['results']
     return render(request, 'characters/characters.html', {'characters': marvel_characters})
 
@@ -25,4 +25,9 @@ def search_characters(request):
       query = request.GET.get('query', '')
       response = characters.all(nameStartsWith=query)
       marvel_characters = response['data']['results']
-      return render(request, 'characters/search_char.html', {'characters': marvel_characters, 'query': query})
+      return render(request, 'characters/characters.html', {'searched_characters': marvel_characters, 'query': query})
+
+def character_details(request, character_id):
+    response = characters.get(character_id)
+    character = response['data']['results'][0]
+    return render(request, 'characters/details.html', {'character': character})
