@@ -1,15 +1,17 @@
 {% extends 'base.html' %}
 {% block content %}
-{% for char in characters %}
   <div class="card">
     <div class="card-content">
-      <span class="card-title">{{ char.name }} Selected character</span>
-      <img src= '{{ char.thumbnail.path}}.{{ char.thumbnail.extension}}'  width="500" height="250">
+      <span class="card-title">{{ char.name }}</span>
+      <img src= '{{ char.thumbnail.path}}.{{ char.thumbnail.extension}}'  width="250" height="250">
     </div>
-    <a href="{% url 'search_characters' %}">Back to Search</a>
   </div>
-{% empty %}
-  <p>No characters found.</p>
-{% endfor %}
-
+  {% for comic in char.comics.items %}
+    <div class="comic-card">
+      <div class="card-content">
+        <span class="card-title">{{ comic.name}}</span>
+        <p>Description: {{ comic.description }}</p>
+      </div>
+    </div>
+  {% endfor %}
 {% endblock %}

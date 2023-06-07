@@ -3,6 +3,7 @@ from marvel import Marvel
 from decouple import config
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
+from .models import Character, Team
 
 import requests
 # Create your views here.
@@ -32,7 +33,8 @@ def search_characters(request):
 def character_details(request, character_id):
     response = characters.get(character_id)
     character = response['data']['results'][0]
-    return render(request, 'characters/details.html', {'character': character})
+    return render(request, 'characters/details.html', {'char': character})
+
 
 def signup(request):
   error_message = ''
