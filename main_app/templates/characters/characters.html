@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Characters Across the Multiverse</h1>
+  <form method="GET" action="{% url 'search_characters' %}">
+    <input type="text" name="query" placeholder="Search character..." value="{{ query }}">
+    <button type="submit">Search</button>
+  </form>
+
+{% for char in characters %}
+  <div class="card">
+    <div class="card-content">
+      <span class="card-title">{{ char.name }}</span>
+      <img src= '{{ char.thumbnail.path}}.{{ char.thumbnail.extension}}'  width="250" height="250">
+    </div>
+  </div>
+{% empty %}
+  <p>No characters found.</p>
+{% endfor %}
+
+{% endblock %}
