@@ -6,11 +6,13 @@
       <img src= '{{ char.thumbnail.path}}.{{ char.thumbnail.extension}}'  width="250" height="250">
     </div>
   </div>
-  {% for comic in char.comics.items %}
+  {% for comic in comics %}
     <div class="comic-card">
       <div class="card-content">
-        <span class="card-title">{{ comic.name}}</span>
-        <p>Description: {{ comic.description }}</p>
+        <span class="card-title">{{comic.title}}</span>
+        <p>id: {{ comic.id }}</p>
+        <img src= '{{ comic.thumbnail.path}}.{{ comic.thumbnail.extension}}'  width="250" height="250">
+        <p>description: {{ comic.description }}</p>
       </div>
     </div>
   {% endfor %}

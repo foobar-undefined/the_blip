@@ -26,14 +26,25 @@ def display_char(request):
 
 def search_characters(request):
       query = request.GET.get('query', '')
-      response = characters.all(nameStartsWith=query)
+
+      if query.isnumeric():
+        response = characters.get(int(query))
+      else:
+        response = characters.all(nameStartsWith=query)
       marvel_characters = response['data']['results']
       return render(request, 'characters/characters.html', {'searched_characters': marvel_characters, 'query': query})
 
 def character_details(request, character_id):
     response = characters.get(character_id)
     character = response['data']['results'][0]
-    return render(request, 'characters/details.html', {'char': character})
+
+    comics_response = characters.comics(character_id)
+    comics = comics_response['data']['results']
+    
+    return render(request, 'characters/details.html', {
+        'char': character,
+        'comics': comics
+        })
 
 
 def signup(request):
