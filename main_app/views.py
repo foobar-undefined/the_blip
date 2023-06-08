@@ -1,11 +1,14 @@
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.shortcuts import render, redirect
 from marvel import Marvel
 from decouple import config
 from django.contrib.auth import login
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import get_object_or_404
 from .models import Character, Team
-
 import requests
+
 # Create your views here.
 marvel = Marvel(
       PUBLIC_KEY=config('PUBLIC_KEY'), 
@@ -26,7 +29,6 @@ def display_char(request):
 
 def search_characters(request):
       query = request.GET.get('query', '')
-
       if query.isnumeric():
         response = characters.get(int(query))
       else:
@@ -36,15 +38,45 @@ def search_characters(request):
 
 def character_details(request, character_id):
     response = characters.get(character_id)
-    character = response['data']['results'][0]
-
+    character_data = response['data']['results'][0]
     comics_response = characters.comics(character_id)
     comics = comics_response['data']['results']
     
+    user = request.user 
+    
+    try:
+        character = Character.objects.get(character_id=character_data['id'], user=user)
+    except Character.DoesNotExist:
+        character = Character(
+            character_id=character_data['id'],
+            name=character_data['name'],
+            description=character_data['description'] or '',
+            thumbnail=character_data['thumbnail'] or '',
+            user=user  # Associate the character with the user
+        )
+        character.save()
+
     return render(request, 'characters/details.html', {
-        'char': character,
-        'comics': comics
-        })
+    'char': character,
+    'comics': comics
+    })
+
+def team_index(request):
+    team = Team.objects.all()
+    return render(request, 'teams/team.html', {'team': team})
+
+def team_detail(request, team_id):
+    team = Team.objects.get(id=team_id)
+    return render(request, 'teams/team_detail.html', {'team': team})
+
+def add_to_team(request, char_id):
+    team_character = get_object_or_404(Character, char_id = char_id)
+    user = request.user
+    team = user.team
+    if team_character not in team.characters.all():
+        team.characters.add(characters)
+
+    return redirect('team', team_id=team.id)
 
 
 def signup(request):

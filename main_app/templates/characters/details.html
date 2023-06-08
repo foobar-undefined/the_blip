@@ -3,9 +3,21 @@
   <div class="card">
     <div class="card-content">
       <span class="card-title">{{ char.name }}</span>
-      <img src= '{{ char.thumbnail.path}}.{{ char.thumbnail.extension}}'  width="250" height="250">
+      <p>Thumbnail Path: {{ char.thumbnail }}</p>
+      <p>Thumbnail Extension: {{ char.thumbnail.extension }}</p>
+      <img src= '{{ char.thumbnail.path}}.{{char.thumbnail.extension}}'  width="250" height="250">
     </div>
   </div>
+  {% if not is_in_team %}
+    <!-- Add to Team Form -->
+    <form method="post" action="{% url 'details' character_id=char.character_id %}">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-primary">Add to Team</button>
+    </form>
+  {% else %}
+    <p>This character is already in your team.</p>
+  {% endif %}
+
   <div class="row">
   {% for comic in comics %}
       <div class="col s12 m6 l3">

@@ -4,9 +4,11 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class Character(models.Model):
-    name= models.CharField(max_length=100),
-    char_id = models.PositiveIntegerField(primary_key=True)
-    image=models.ImageField(upload_to='characters', height_field=None, width_field=250, max_length=100),
+    character_id = models.PositiveIntegerField(primary_key=True)
+    name= models.CharField(max_length=100)
+    description = models.CharField(max_length=305)
+    thumbnail = models.CharField(max_length=255, blank=True)
+    teams=models.ManyToManyField('Team', blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
  
     def __str__(self):
