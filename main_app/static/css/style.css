@@ -4,14 +4,43 @@ body {
     flex-direction: column;
     font-family: 'Avengeance Heroic Avenger', sans-serif;
     font-size: large;
-  }
+}
   
-  main {
-    flex: 1 0 auto;
-  }
-  
-  footer.page-footer {
-    padding-top: 0;
-    text-align: right;
-  }
-  
+main {
+  flex: 1 0 auto;
+}
+
+.comic-card {
+  position: relative;
+  perspective: 1000px;
+}
+
+.comic-card:hover .flip-card-inner {
+  position: relative;
+  text-align: center;
+  transition: transform 0.5s;
+  transform-style: preserve-3d;
+}
+.flip-card-front, .flip-card-back {
+  backface-visibility: hidden;
+  text-align: center;
+  -webkit-backface-visibility: hidden;
+}
+
+.flip-card-front {
+  z-index: 2;
+	transform: rotateY(0deg);
+  background-color: #bbb;
+  color: black;
+}
+
+.flip-card-back {
+  color: white;
+  transform: rotateY(180deg);
+} 
+
+footer.page-footer {
+  padding-top: 0;
+  text-align: right;
+}
+ 
