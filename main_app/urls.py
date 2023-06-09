@@ -10,5 +10,7 @@ urlpatterns = [
         path('add_to_teams/<int:character_id>/<int:team_id>/', views.add_to_team, name='add_to_team'),
         path('teams/team', views.team_index, name='team'),
         path('teams/<int:team_id>/', views.team_detail, name='team_detail'),
+        path('teams/<int:team_id>/unassoc_char/<int:character_id>', views.unassoc_char, name='unassoc_char'),
         path('accounts/signup/', views.signup, name='signup'),
+
 ]   

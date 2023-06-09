@@ -1,14 +1,22 @@
 {% extends 'base.html' %}
 {% block content %}
     <h1>{{ team.name }}</h1>
-    <ul>
-        {% for character in characters %}
-        <div class="card">
-            <div class="card-content">
-              <span class="card-title">{{ char.name }}</span>
-              <img src= '{{ char.thumbnail}}'  width="250" height="250">
+    <div class="row">
+        {% for char in team.characters.all %}
+        <div class="col s12 m6 l3">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title">{{ char.name }}</span>
+                    <img src= '{{ char.thumbnail}}'  width="250" height="250">
+                </div>
+                <div class="card-action">
+                    <form action="{% url 'unassoc_char' team.id char.id %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn red">Remove Character</button>
+                    </form>
+                </div>
             </div>
-          </div>
-        {% endfor %}
-    </ul>
+        </div>
+        {% endfor %} 
+    </div>
 {% endblock %}

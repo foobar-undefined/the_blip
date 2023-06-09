@@ -15,7 +15,7 @@ class Character(models.Model):
         return self.name
     
     def get_absolute_url(self):
-        return reverse('detail', kwargs={'char_id'})
+        return reverse('detail', kwargs={'char_id':self.character_id})
 
 class Team(models.Model):
     name = models.CharField(max_length=50)
@@ -26,4 +26,4 @@ class Team(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('team_detail', kwargs={'pk': self.pk})
+        return reverse('team_detail', kwargs={'team_id': self.id})

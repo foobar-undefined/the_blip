@@ -1,13 +1,13 @@
 from django.views.generic.edit import CreateView,UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
 from django.shortcuts import render, redirect
+from .models import Character, Team
 from marvel import Marvel
 from decouple import config
 from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import get_object_or_404
-from .models import Character, Team
 import requests
 
 # Create your views here.
@@ -101,6 +101,13 @@ def signup(request):
   form = UserCreationForm()
   context = {'form': form, 'error_message': error_message}
   return render(request, 'registration/signup.html', context)
+
+def unassoc_char(request, team_id, character_id):
+    team = Team.objects.get(id = team_id)
+    character = Character.objects.get(id=character_id)
+    team.characters.remove(character)
+    return redirect('team_detail', team_id=team_id)
+
 
 class TeamCreate(LoginRequiredMixin, ListView):
     model = Team
