@@ -72,12 +72,12 @@ def team_index(request):
 def team_detail(request, team_id):
     team = Team.objects.get(id=team_id)
     characters = team.characters.all()
+    print(characters)
     return render(request, 'teams/team_detail.html', {'team': team, 'characters': characters})
 
 def add_to_team(request, character_id, team_id):
     character = get_object_or_404(Character, character_id = character_id)
     team = get_object_or_404(Team, id=team_id)
-
     if character not in team.characters.all():
         team.characters.add(characters)
 

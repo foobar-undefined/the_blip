@@ -3,7 +3,12 @@
     <h1>{{ team.name }}</h1>
     <ul>
         {% for character in characters %}
-            <li>{{ character.name }}</li>
+        <div class="card">
+            <div class="card-content">
+              <span class="card-title">{{ char.name }}</span>
+              <img src= '{{ char.thumbnail}}'  width="250" height="250">
+            </div>
+          </div>
         {% endfor %}
     </ul>
 {% endblock %}
