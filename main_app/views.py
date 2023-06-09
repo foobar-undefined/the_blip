@@ -41,7 +41,14 @@ def character_details(request, character_id):
     character_data = response['data']['results'][0]
     comics_response = characters.comics(character_id)
     comics = comics_response['data']['results']
-    
+    thumbnail = character_data['thumbnail']
+    path = list(thumbnail.values())[0]
+    extension = list(thumbnail.values())[1]
+    print(path)
+    print(extension)
+    # thumbnail_path = character_data['thumbnail']['path']
+    thumbnail_extension = character_data['thumbnail']['extension']
+    thumbnail_url = path + '.'+ extension
     user = request.user 
     
     try:
@@ -51,7 +58,7 @@ def character_details(request, character_id):
             character_id=character_data['id'],
             name=character_data['name'],
             description=character_data['description'] or '',
-            thumbnail=character_data['thumbnail'] or '',
+            thumbnail=thumbnail_url,
             user=user  # Associate the character with the user
         )
         character.save()

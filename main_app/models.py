@@ -6,8 +6,8 @@ from django.contrib.auth.models import User
 class Character(models.Model):
     character_id = models.PositiveIntegerField(primary_key=True)
     name= models.CharField(max_length=100)
-    description = models.CharField(max_length=305)
-    thumbnail = models.CharField(max_length=255, blank=True)
+    description = models.TextField()
+    thumbnail = models.TextField()
     teams=models.ManyToManyField('Team', blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
  
