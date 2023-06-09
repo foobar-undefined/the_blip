@@ -1,4 +1,5 @@
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.edit import CreateView,UpdateView, DeleteView
+from django.views.generic import ListView, DetailView
 from django.shortcuts import render, redirect
 from marvel import Marvel
 from decouple import config
@@ -44,10 +45,6 @@ def character_details(request, character_id):
     thumbnail = character_data['thumbnail']
     path = list(thumbnail.values())[0]
     extension = list(thumbnail.values())[1]
-    print(path)
-    print(extension)
-    # thumbnail_path = character_data['thumbnail']['path']
-    thumbnail_extension = character_data['thumbnail']['extension']
     thumbnail_url = path + '.'+ extension
     user = request.user 
     
@@ -74,17 +71,17 @@ def team_index(request):
 
 def team_detail(request, team_id):
     team = Team.objects.get(id=team_id)
-    return render(request, 'teams/team_detail.html', {'team': team})
+    characters = team.characters.all()
+    return render(request, 'teams/team_detail.html', {'team': team, 'characters': characters})
 
-def add_to_team(request, char_id):
-    team_character = get_object_or_404(Character, char_id = char_id)
-    user = request.user
-    team = user.team
-    if team_character not in team.characters.all():
+def add_to_team(request, character_id, team_id):
+    character = get_object_or_404(Character, character_id = character_id)
+    team = get_object_or_404(Team, id=team_id)
+
+    if character not in team.characters.all():
         team.characters.add(characters)
 
     return redirect('team', team_id=team.id)
-
 
 def signup(request):
   error_message = ''
@@ -104,3 +101,15 @@ def signup(request):
   form = UserCreationForm()
   context = {'form': form, 'error_message': error_message}
   return render(request, 'registration/signup.html', context)
+
+class TeamCreate(LoginRequiredMixin, ListView):
+    model = Team
+    fields = ['name', 'character', 'user']
+
+class TeamUpdate(LoginRequiredMixin, DetailView):
+    model = Team
+    fields = ['name', 'character']
+
+class TeamDelete(LoginRequiredMixin, DeleteView):
+    model = Team
+    success_url = '/team/'

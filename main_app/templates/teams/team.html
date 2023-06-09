@@ -1,13 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
-
-    {% for team_member in team %}
-    <div class="card">
-        <div class="card-content">
-          <span class="card-title">{{ team_member.name }}</span>
-          <img src= '{{ team_member.thumbnail.path}}.{{team_member.thumbnail.extension}}'  width="250" height="250">
-        </div>
-      </div>
-    {% endfor %}
+<h1>Assemble your team </h1>
+  <form action="" method="post">
+    {% csrf_token %}
+    <table>
+        {{ form.as_table }}
+    </table>
+    <input class="btn blue" type="submit" value="{% if object %} Update Team {% else %} Create team {% endif %}">
+  </form>
 
 {% endblock %}
