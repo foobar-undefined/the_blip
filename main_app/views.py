@@ -132,4 +132,4 @@ class TeamUpdate(LoginRequiredMixin, DetailView):
 
 class TeamDelete(LoginRequiredMixin, DeleteView):
     model = Team
-    success_url = '/team/'
+    success_url = '/teams/'
