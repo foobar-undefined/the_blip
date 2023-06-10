@@ -8,18 +8,17 @@ class Character(models.Model):
     name= models.CharField(max_length=100)
     description = models.TextField()
     thumbnail = models.TextField()
-    teams=models.ManyToManyField('Team', blank=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
- 
+    
     def __str__(self):
         return self.name
     
     def get_absolute_url(self):
-        return reverse('detail', kwargs={'char_id':self.character_id})
+        return reverse('characters_detail', kwargs={'pk':self.character_id})
 
 class Team(models.Model):
     name = models.CharField(max_length=50)
     characters = models.ManyToManyField(Character)
+    description = models.TextField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):

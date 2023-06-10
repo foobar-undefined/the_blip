@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
+
 <h1>Assemble your team </h1>
+<a href="{% url 'teams_create' %}">Assemble a Team</a></li>
+
 {% for el in team %}
 <div class="col s12 m6 l3">
   <div class="card">

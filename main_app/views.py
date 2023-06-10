@@ -1,3 +1,5 @@
+from django.forms.models import BaseModelForm
+from django.http import HttpResponse
 from django.views.generic.edit import CreateView,UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
 from django.shortcuts import render, redirect
@@ -49,39 +51,58 @@ def character_details(request, character_id):
     user = request.user 
     
     try:
-        character = Character.objects.get(character_id=character_data['id'], user=user)
+        character = Character.objects.get(character_id=character_data['id'])
     except Character.DoesNotExist:
         character = Character(
             character_id=character_data['id'],
             name=character_data['name'],
             description=character_data['description'] or '',
-            thumbnail=thumbnail_url,
-            user=user  # Associate the character with the user
+            thumbnail=thumbnail_url
         )
         character.save()
 
-    return render(request, 'characters/details.html', {
+    return render(request, 'characters/characters_details.html', {
     'char': character,
     'comics': comics
     })
 
 def team_index(request):
-    team = Team.objects.all()
-    return render(request, 'teams/team.html', {'team': team})
+    teams = Team.objects.filter(user=request.user)
+    return render(request, 'teams/team.html', {'team': teams})
 
 def team_detail(request, team_id):
     team = Team.objects.get(id=team_id)
     characters = team.characters.all()
-    print(characters)
+    # no_characters = Character.objects.exclude(id_in=characters)
     return render(request, 'teams/team_detail.html', {'team': team, 'characters': characters})
 
+# def add_to_team(request, character_id, team_id):
+#     character = get_object_or_404(Character, character_id = character_id)
+#     team = get_object_or_404(Team, id=team_id)
+#     if character not in team.characters.all():
+#         team.characters.add(characters)
+
+
+    # return redirect('team', team_id=team.id)
+
 def add_to_team(request, character_id, team_id):
-    character = get_object_or_404(Character, character_id = character_id)
-    team = get_object_or_404(Team, id=team_id)
+    team = Team.objects.get(id = team_id)
+    character = Character.objects.get(id=character_id)
     if character not in team.characters.all():
         team.characters.add(characters)
-
     return redirect('team', team_id=team.id)
+
+def assoc_char(request, team_id, character_id):
+    team = Team.objects.get(id=team_id)
+    character = Character.objects.get(id=character_id)
+    team.characters.add(character)
+    return redirect('team_detail', team_id=team_id)
+
+def unassoc_char(request, team_id, character_id):
+    team = Team.objects.get(id = team_id)
+    character = Character.objects.get(id=character_id)
+    team.characters.remove(character)
+    return redirect('team_detail', team_id=team_id)
 
 def signup(request):
   error_message = ''
@@ -102,20 +123,17 @@ def signup(request):
   context = {'form': form, 'error_message': error_message}
   return render(request, 'registration/signup.html', context)
 
-def unassoc_char(request, team_id, character_id):
-    team = Team.objects.get(id = team_id)
-    character = Character.objects.get(id=character_id)
-    team.characters.remove(character)
-    return redirect('team_detail', team_id=team_id)
-
-
-class TeamCreate(LoginRequiredMixin, ListView):
+class TeamCreate(LoginRequiredMixin, CreateView):
     model = Team
-    fields = ['name', 'character', 'user']
+    fields = ['name','description']
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
 class TeamUpdate(LoginRequiredMixin, DetailView):
     model = Team
-    fields = ['name', 'character']
+    fields = ['name']
 
 class TeamDelete(LoginRequiredMixin, DeleteView):
     model = Team

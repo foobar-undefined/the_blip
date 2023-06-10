@@ -22,7 +22,7 @@
           <li><a href="{% url 'about' %}">About</a></li>
           <li><a href="{% url 'characters' %}">Characters</a></li>
           {% if user.is_authenticated %}
-            <li><a href="{% url 'team'%}">Assemble Team</a></li>
+            <li><a href="{% url 'team'%}">Assemble</a></li>
             <li><a href="{% url 'logout'%}">Log Out</a></li>
           {% else %}
             <li><a href="{% url 'signup' %}">Sign Up</a></li>

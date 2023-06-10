@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% if object %}
+    <h1 class="hero-card">Edit Team <h1>
+{% else %}
+    <h1 class="team-create"> Name'em</h1>
+{% endif %}
+
+<div class="assemble-container">
+    <label>Name </label>
+    <form method="POST" action="" autocomplete="off">
+        {% csrf_token %}
+        <table>
+        {{ form.as_table }}
+        </table>
+        <br>
+        <div class="assemble-name">
+            <input class="btn blue" type="submit" value="{% if object %} Update Team {% else %} Create Team {% endif %}">
+        </div>
+    </form>
+</div>
+
+
+
+{% endblock %}

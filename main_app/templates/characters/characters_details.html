@@ -8,7 +8,7 @@
   </div>
   {% if not is_in_team %}
     <!-- Add to Team Form -->
-    <form method="post" action="{% url 'details' character_id=char.character_id %}">
+    <form method="post" action="{% url 'characters_details' character_id=char.character_id %}">
       {% csrf_token %}
       <button type="submit" class="btn btn-primary">Add to Team</button>
     </form>
