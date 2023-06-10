@@ -10,7 +10,7 @@
                     <img src= '{{ char.thumbnail}}'  width="250" height="250">
                 </div>
                 <div class="card-action">
-                    <form action="{% url 'unassoc_char' team.id char.id %}" method="POST">
+                    <form action="{% url 'unassoc_char' team.id char.character_id %}" method="POST">
                         {% csrf_token %}
                         <button type="submit" class="btn red">Remove Character</button>
                     </form>
@@ -18,5 +18,25 @@
             </div>
         </div>
         {% endfor %} 
+    </div>
+
+    <h2>Available Characters:</h2>
+    <div class="row">
+        {% for char in available_characters %}
+            <div class="col s12 m6 l3">
+                <div class="card">
+                    <div class="card-content">
+                        <span class="card-title">{{ char.name }}</span>
+                        <img src="{{ char.thumbnail }}" width="250" height="250">
+                    </div>
+                    <div class="card-action">
+                        <form action="{% url 'assoc_char' team.id char.character_id %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn green">Add Character</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endfor %} 
     </div>
 {% endblock %}

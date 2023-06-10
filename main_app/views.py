@@ -48,7 +48,6 @@ def character_details(request, character_id):
     path = list(thumbnail.values())[0]
     extension = list(thumbnail.values())[1]
     thumbnail_url = path + '.'+ extension
-    user = request.user 
     
     try:
         character = Character.objects.get(character_id=character_data['id'])
@@ -73,34 +72,30 @@ def team_index(request):
 def team_detail(request, team_id):
     team = Team.objects.get(id=team_id)
     characters = team.characters.all()
-    # no_characters = Character.objects.exclude(id_in=characters)
-    return render(request, 'teams/team_detail.html', {'team': team, 'characters': characters})
-
-# def add_to_team(request, character_id, team_id):
-#     character = get_object_or_404(Character, character_id = character_id)
-#     team = get_object_or_404(Team, id=team_id)
-#     if character not in team.characters.all():
-#         team.characters.add(characters)
-
-
-    # return redirect('team', team_id=team.id)
+    id_list=characters.values_list('character_id', flat=True)
+    available_characters = Character.objects.exclude(character_id__in=id_list)
+    return render(request, 'teams/team_detail.html', {
+        'team': team, 
+        'characters': characters,
+        'available_characters': available_characters
+        })
 
 def add_to_team(request, character_id, team_id):
     team = Team.objects.get(id = team_id)
     character = Character.objects.get(id=character_id)
     if character not in team.characters.all():
         team.characters.add(characters)
-    return redirect('team', team_id=team.id)
+    return redirect('team', team_id=team_id)
 
 def assoc_char(request, team_id, character_id):
     team = Team.objects.get(id=team_id)
-    character = Character.objects.get(id=character_id)
+    character = Character.objects.get(character_id=character_id)
     team.characters.add(character)
     return redirect('team_detail', team_id=team_id)
 
 def unassoc_char(request, team_id, character_id):
     team = Team.objects.get(id = team_id)
-    character = Character.objects.get(id=character_id)
+    character = Character.objects.get(character_id=character_id)
     team.characters.remove(character)
     return redirect('team_detail', team_id=team_id)
 
@@ -133,7 +128,7 @@ class TeamCreate(LoginRequiredMixin, CreateView):
 
 class TeamUpdate(LoginRequiredMixin, DetailView):
     model = Team
-    fields = ['name']
+    fields = ['name','description', 'characters']
 
 class TeamDelete(LoginRequiredMixin, DeleteView):
     model = Team
