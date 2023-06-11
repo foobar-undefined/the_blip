@@ -27,23 +27,53 @@
   {% else %}
     <p>This character is already in your team.</p>
   {% endif %} -->
-
-  <div class="carousel" style="width:50%">
-    {% for comic in comics %}
-          <div class="carousel-item" >
-            <div class="comic-card" >
-                <img class ='comic-image' src= '{{ comic.thumbnail.path}}.{{ comic.thumbnail.extension}}'>
+<div class="row">
+  <div class="col s6">
+    <div class="carousel" style="width:100%" id="comic-carousel">
+      {% for comic in comics %}
+            <div class="carousel-item" >
+              <div class="comic-card" >
+                  <img class ='comic-image' src= '{{ comic.thumbnail.path}}.{{ comic.thumbnail.extension}}' comic-id="{{ comic.id }}">
+              </div>
             </div>
-          </div>
-    {% endfor %}
+      {% endfor %}
+    </div>
   </div>
+  <div class="col s6">
+    <div class="comic-description">
+      {% for comic in comics %}
+        {% if comic.thumbnail.path %}
+          <div class="comic-description-item" comic-id="{{comic.id}}">
+            <p class = "comic-description-text">{{ comic.description }}</p>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-        var elems = document.querySelectorAll('.carousel');
-        var instances = M.Carousel.init(elems);
+        let elems = document.querySelectorAll('.carousel');
+        let instances = M.Carousel.init(elems);
+
+        let comicDescriptions = document.querySelectorAll('.comic-description-item');
+        comicDescriptions.forEach(function(comic){
+          comic.style.display = 'none';
+        });
+
+        let carousel = document.getElementById('comic-carousel');
+        carousel.addEventListener('click', function(event){
+          let target = event.target;
+          let comicId = target.getAttribute('comic-id');
+          let singleDescription = document.querySelector(`.comic-description-item[comic-id="${comicId}"]`);
+
+          comicDescriptions.forEach(function(comic){
+            comic.style.display = 'none';
+          });
+          singleDescription.style.display= "block";
+        });
     });
   </script>
-
 {% endblock %}
