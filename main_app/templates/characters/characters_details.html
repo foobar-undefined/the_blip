@@ -31,9 +31,9 @@
   <div class="col s6">
     <div class="carousel" style="width:100%" id="comic-carousel">
       {% for comic in comics %}
-            <div class="carousel-item" >
-              <div class="comic-card" >
-                  <img class ='comic-image' src= '{{ comic.thumbnail.path}}.{{ comic.thumbnail.extension}}' comic-id="{{ comic.id }}">
+            <div class="carousel-item">
+              <div class="comic-card">
+                  <img class ='comic-image' src= '{{comic.thumbnail.path}}.{{ comic.thumbnail.extension}}' data-comic-id="{{comic.id}}">
               </div>
             </div>
       {% endfor %}
@@ -43,8 +43,9 @@
     <div class="comic-description">
       {% for comic in comics %}
         {% if comic.thumbnail.path %}
-          <div class="comic-description-item" comic-id="{{comic.id}}">
-            <p class = "comic-description-text">{{ comic.description }}</p>
+          <div class="comic-description-item" data-comic-id="{{comic.id}}">
+            <p class="comic-title">{{comic.title}}</p>
+            <p class="comic-description-text">{{ comic.description }}</p>
           </div>
         {% endif %}
       {% endfor %}
@@ -66,8 +67,8 @@
         let carousel = document.getElementById('comic-carousel');
         carousel.addEventListener('click', function(event){
           let target = event.target;
-          let comicId = target.getAttribute('comic-id');
-          let singleDescription = document.querySelector(`.comic-description-item[comic-id="${comicId}"]`);
+          let comicId = target.getAttribute('data-comic-id');
+          let singleDescription = document.querySelector(`.comic-description-item[data-comic-id="${comicId}"]`);
 
           comicDescriptions.forEach(function(comic){
             comic.style.display = 'none';

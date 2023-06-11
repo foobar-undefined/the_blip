@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css?family=Dekko|Lato:900|Rock+Salt");
+
 body {
     display: flex;
     min-height: 100vh;
@@ -32,6 +34,50 @@ main {
   width: 100%;
   height: 600px;
   transform: translateY(-50%);
+}
+
+.comic-description{
+  position: relative;
+  margin: 100px 2.5% auto 2.5%;
+  width: 95%;
+  max-width: 500px;
+  height: auo;
+  background: linear-gradient(to left, #000, #ff0000);
+  padding: 40px 10px;
+  line-height:1.8em;
+  color:#fff;
+  box-shadow: 5px 7px 5px 0 rgba(0, 0, 0, .5);
+}
+
+.comic-description::before{
+  position: absolute;
+  content: '';
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  left: -2px;
+  top: -2px;
+  background: linear-gradient(to left, #ff0000, #000);
+  z-index: -1;
+}
+
+.comic-title{
+  background: url('data:image/svg+xml;utf8,<svg width="100" height="100" transform="rotate(25)" opacity="0.8" version="1.1" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g  fill="%23d68810"><circle cx="25" cy="25" r="12.5"/><circle cx="75" cy="75" r="12.5"/><circle cx="75" cy="25" r="12.5"/><circle cx="25" cy="75" r="12.5"/></g></svg>'),
+    #ffcd28;
+  background-size: 13px, 100%;
+  font-weight: 700;
+  font-family: "Dekko", cursive;
+  position: absolute;
+  top: -22px;
+  right: 5%;
+  padding: 5px 15px;
+  margin: 0;
+  font-size: 20px;
+  border-left:2px solid #000;
+  border-right:2px solid #000;
+  border-top:2px solid #000;
+  border-bottom:2px solid #000;
+  font-weight: bold;
+  color:#000;
 }
 
 footer.page-footer {
