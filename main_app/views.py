@@ -12,6 +12,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import get_object_or_404
 import requests
 
+
+
 # Create your views here.
 marvel = Marvel(
       PUBLIC_KEY=config('PUBLIC_KEY'), 
@@ -39,7 +41,9 @@ def search_characters(request):
       marvel_characters = response['data']['results']
       return render(request, 'characters/characters.html', {'searched_characters': marvel_characters, 'query': query})
 
+
 def character_details(request, character_id):
+    access_token = config('ACCESS_TOKEN')
     response = characters.get(character_id)
     character_data = response['data']['results'][0]
     comics_response = characters.comics(character_id)
@@ -60,9 +64,20 @@ def character_details(request, character_id):
         )
         character.save()
 
+    superhero_url = f"https://superheroapi.com/api/{access_token}/search/{character_data['name']}"
+    superhero_response = requests.get(superhero_url)
+    superhero_data = superhero_response.json()
+
+    if superhero_response.status_code == 200:
+        superhero_results = superhero_data['results']
+        if superhero_results:
+            superhero_character = superhero_results[0]
+            superhero_stats = superhero_character['powerstats']
+
     return render(request, 'characters/characters_details.html', {
     'char': character,
-    'comics': comics
+    'comics': comics,
+    'superhero_stats': superhero_stats
     })
 
 def team_index(request):

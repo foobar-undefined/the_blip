@@ -6,15 +6,12 @@
         <div class="card-image">
           <span class="card-title">{{ char.name }}</span>
           <img src= '{{ char.thumbnail}}'  width="250" height="250">
-          {% if not is_in_team %}
-            <!-- Add to Team Form -->
-            <form method="post" action="">
-              {% csrf_token %}
-              <button type="submit" class="btn btn-primary">Add to Roster</button>
-            </form>
-          {% else %}
-              <p>This character is already in your team.</p>
-          {% endif %}
+          <p>{{superhero_stats.intellegence}}</p>
+          <p>{{superhero_stats.strength}}</p>
+          <p>{{superhero_stats.speed}}</p>
+          <p>{{superhero_stats.durability}}</p>
+          <p>{{superhero_stats.power}}</p>
+          <p>{{superhero_stats.combat}}</p>
         </div>
       </div>
     </div>
@@ -31,11 +28,13 @@
   <div class="col s6">
     <div class="carousel" style="width:100%" id="comic-carousel">
       {% for comic in comics %}
-            <div class="carousel-item">
-              <div class="comic-card">
-                  <img class ='comic-image' src= '{{comic.thumbnail.path}}.{{ comic.thumbnail.extension}}' data-comic-id="{{comic.id}}">
+        {% if comic.description %}
+              <div class="carousel-item">
+                <div class="comic-card">
+                    <img class ='comic-image' src= '{{comic.thumbnail.path}}.{{ comic.thumbnail.extension}}' data-comic-id="{{comic.id}}">
+                </div>
               </div>
-            </div>
+          {%endif%}
       {% endfor %}
     </div>
   </div>
