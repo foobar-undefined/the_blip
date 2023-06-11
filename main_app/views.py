@@ -9,9 +9,9 @@ from decouple import config
 from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
-from django.shortcuts import get_object_or_404
+# from django.shortcuts import get_object_or_404
 import requests
-
+import random
 
 
 # Create your views here.
@@ -22,7 +22,17 @@ marvel = Marvel(
 characters = marvel.characters
 
 def home(request):
-	  return render(request, 'home.html')
+    character_ids = [1009718, 1009368, 1009220]  # Example IDs
+    random_heroes = []
+    for character_id in character_ids:
+        response = characters.get(character_id)
+        character_data = response['data']['results'][0]
+        if character_data['thumbnail']['path']:
+            random_heroes.append(character_data)
+
+    return render(request, 'home.html', {
+          'random_heroes': random_heroes
+      })
 
 def about(request):
     return render(request, 'about.html')

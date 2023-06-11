@@ -13,6 +13,19 @@
     
     <h1>Where Universes collide</h1>
     
+    <div class="row">
+        {% for char in random_heroes %}
+        <div class="col s12 m6 l3">
+          <div class="card">
+            <div class="card-content">
+            <a href="{%url 'characters_details' char.id %}">
+              <span class="card-title">{{ char.name }} </span>
+              <img src= '{{ char.thumbnail.path}}.{{ char.thumbnail.extension}}'  width="250" height="250">
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+
     {% endblock %}
 </body>
 </html>
