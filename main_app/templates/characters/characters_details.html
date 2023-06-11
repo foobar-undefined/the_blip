@@ -1,5 +1,43 @@
 {% extends 'base.html' %}
 {% block content %}
+  <div class="row">
+    <div class="col s12 m7">
+      <div class="card">
+        <div class="card-image">
+          <span class="card-title">{{ char.name }}</span>
+          <img src= '{{ char.thumbnail}}'  width="250" height="250">
+          {% if not is_in_team %}
+            <!-- Add to Team Form -->
+            <form method="post" action="">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-primary">Add to Roster</button>
+            </form>
+          {% else %}
+              <p>This character is already in your team.</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- {% if not is_in_team %}
+    <form method="post" action="">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-primary">Add to Roster</button>
+    </form>
+  {% else %}
+    <p>This character is already in your team.</p>
+  {% endif %} -->
+
+  <div class="carousel" style="width:50%">
+    {% for comic in comics %}
+          <div class="carousel-item" >
+            <div class="comic-card" >
+                <img class ='comic-image' src= '{{ comic.thumbnail.path}}.{{ comic.thumbnail.extension}}'>
+            </div>
+          </div>
+    {% endfor %}
+  </div>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -7,32 +45,5 @@
         var instances = M.Carousel.init(elems);
     });
   </script>
-
-  <div class="card">
-    <div class="card-content">
-      <span class="card-title">{{ char.name }}</span>
-      <img src= '{{ char.thumbnail}}'  width="250" height="250">
-    </div>
-  </div>
-  {% if not is_in_team %}
-    <!-- Add to Team Form -->
-    <form method="post" action="">
-      {% csrf_token %}
-      <button type="submit" class="btn btn-primary">Add to Roster</button>
-    </form>
-  {% else %}
-    <p>This character is already in your team.</p>
-  {% endif %}
-
-  <div class="carousel">
-  {% for comic in comics %}
-        <div class="carousel-item" >
-          <div class="comic-card" >
-              <p> Front id: {{ comic.id }}</p>
-              <img src= '{{ comic.thumbnail.path}}.{{ comic.thumbnail.extension}}'  width="250" height="250">
-          </div>
-        </div>
-  {% endfor %}
-  </div>
 
 {% endblock %}
