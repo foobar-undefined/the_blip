@@ -1,17 +1,37 @@
 {% extends 'base.html' %}
 {% block content %}
   <div class="row">
-    <div class="col s12 m7">
-      <div class="card">
-        <div class="card-image">
+    <div class="col" >
+      <div class="card" id="char-image">
+        <div class="card-content">
           <span class="card-title">{{ char.name }}</span>
           <img src= '{{ char.thumbnail}}'  width="250" height="250">
-          <p>{{superhero_stats.intellegence}}</p>
-          <p>{{superhero_stats.strength}}</p>
-          <p>{{superhero_stats.speed}}</p>
-          <p>{{superhero_stats.durability}}</p>
-          <p>{{superhero_stats.power}}</p>
-          <p>{{superhero_stats.combat}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col s8" id="char-stats">
+      <div class = "card">
+            <div class="stat-level">
+                <div class ="bar intelligence"> Intelligence: {{superhero_stats.intelligence}}</div>
+              </div>
+            <div class="stat-level">
+              <div class ="bar strength" > Strenght: {{superhero_stats.strength}}</div>
+            </div>
+            <div class="stat-level">
+              
+              <div class ="bar speed"> Speed{{superhero_stats.speed}}</div>
+            </div>
+            <div class="stat-level">
+              <div class ="bar power"> Power: {{superhero_stats.power}}</div>
+            </div>
+            <div class="stat-level">
+              <div class ="bar durability"> Durability: {{superhero_stats.durability}}</div>
+            </div>
+            <div class="stat-level">
+              <div class ="bar combat"> Combat: {{superhero_stats.combat}}</div>
+            </div>
+                <p class="hero-name"> Real name: {{superhero_name}}</p>
+          </div>
         </div>
       </div>
     </div>

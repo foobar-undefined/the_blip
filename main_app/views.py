@@ -73,11 +73,13 @@ def character_details(request, character_id):
         if superhero_results:
             superhero_character = superhero_results[0]
             superhero_stats = superhero_character['powerstats']
+            superhero_name = superhero_character['biography']["full-name"]
 
     return render(request, 'characters/characters_details.html', {
-    'char': character,
-    'comics': comics,
-    'superhero_stats': superhero_stats
+        'char': character,
+        'comics': comics,
+        'superhero_stats': superhero_stats,
+        'superhero_name': superhero_name,
     })
 
 def team_index(request):
