@@ -6,8 +6,17 @@ body {
     flex-direction: column;
     font-family: 'Avengeance Heroic Avenger', sans-serif;
     font-size: large;
+    background-image: url('../images/bkgrd.jpeg');
+    background-size: cover;
+    background-position: center;
 }
-  
+
+h1{
+  color: white
+}
+h2{
+  color: white;
+}
 main {
   flex: 1 0 auto;
 }
@@ -38,7 +47,9 @@ main {
   background: dodgerblue;
   text-align: center;
 }
-
+p{
+  color: white;
+}
 .bar.strength {
   background: orange;
 }

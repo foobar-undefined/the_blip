@@ -14,8 +14,9 @@
     <h1>Where Universes collide</h1>
     
     <div class="row">
+        <h2> Check out these Legends 👇</h2>
         {% for char in random_heroes %}
-        <div class="col s12 m6 l3">
+        <div class="col s12 l3">
           <div class="card">
             <div class="card-content">
             <a href="{%url 'characters_details' char.id %}">
