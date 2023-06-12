@@ -10,6 +10,7 @@ django-on-heroku = "*"
 gunicorn = "*"
 environ = "*"
 django-environ = "*"
+requests = "*"
 
 [dev-packages]
 
