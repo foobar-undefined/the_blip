@@ -27,7 +27,7 @@ The Blip is a website that allows you to search thru the multiverse of heroes wi
 - Django
 - Git
 - Visual Studio Code
-- API
+- API (Marvel & SuperHeroAPI)
 - Python
 
 # Icebox Feature: (soon to come)
