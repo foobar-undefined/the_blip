@@ -6,11 +6,11 @@ name = "pypi"
 [packages]
 django = "*"
 psycopg2-binary = "*"
-django-on-heroku = "*"
 gunicorn = "*"
 environ = "*"
 django-environ = "*"
 requests = "*"
+django-heroku = "*"
 
 [dev-packages]
 
