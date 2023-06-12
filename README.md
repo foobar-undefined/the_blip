@@ -18,7 +18,7 @@ The Blip is a website that allows you to search thru the multiverse of heroes wi
 
 ## 👇 Check out the website here! 👇
 
-[See the app working!]()
+[See the app working!](https://the-blip.herokuapp.com/)
 
 # Technologies:
 - JavaScript
