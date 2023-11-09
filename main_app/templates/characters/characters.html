@@ -3,7 +3,7 @@
 
 <h1>Characters Across the Multiverse</h1>
   <form method="GET" action="{% url 'search_characters' %}">
-    <input type="text" name="query" placeholder="Search character..." value="{{ query }}">
+    <input type="text" class="valid" name="query" placeholder="Search character..." value="{{ query }}">
     <button type="submit">Search</button>
   </form>
   {% if searched_characters %}
